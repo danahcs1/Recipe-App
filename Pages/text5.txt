@@ -1,0 +1,287 @@
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  SafeAreaView,
+  Dimensions
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import * as Animatable from 'react-native-animatable';
+
+const { width } = Dimensions.get('window');
+
+const PastaScreen = ({ navigation }) => {
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleExpand = () => {
+    setExpanded(!expanded);
+  };
+
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        {/* App Bar */}
+        <View style={styles.appBar}>
+          <Text style={styles.appBarTitle}>Recipe Recommender</Text>
+        </View>
+
+        {/* Content */}
+        <ScrollView style={styles.content}>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Italian Dishes</Text>
+            
+            {/* Recipe Image - Adjusted to maintain aspect ratio */}
+            <View style={styles.recipeImageContainer}>
+              <Image
+                source={{ uri: 'https://images.unsplash.com/photo-1552056776-9b5657118ca4?w=500&h=500' }}
+                style={styles.recipeImage}
+                resizeMode="cover"
+              />
+            </View>
+
+            {/* Expandable Recipe Info */}
+            <TouchableOpacity 
+              style={styles.expandableHeader}
+              onPress={toggleExpand}
+            >
+              <Text style={styles.recipeTitle}>Pasta</Text>
+              <Ionicons 
+                name={expanded ? 'chevron-up' : 'chevron-down'} 
+                size={24} 
+                color="#9439EF" 
+              />
+            </TouchableOpacity>
+
+            {!expanded ? (
+              <Text style={styles.collapsedContent}>
+                Ingredients:{"\n"}
+                2 sprigs of oregano{"\n"}
+                olive oil 2 small onions and 4 cloves of garlic{"\n"}
+                1kg rainbow or Swiss chard, or other seasonal greens{"\n"}
+                ½ a lemon{"\n\n"}
+                TOMATO SAUCE:{"\n"}
+                2 cloves of garlic{"\n"}
+                1 dried red chilli{"\n"}
+                1 bunch of basil (30g){"\n"}
+                3 x 400g tins of quality plum tomatoes{"\n"}
+                250g dried cannelloni tubes{"\n\n"}
+                OOZY CHEESE SAUCE:{"\n"}
+                250g ricotta cheese{"\n"}
+                60g Cheddar cheese{"\n"}
+                60g Parmesan cheese{"\n"}
+                1 large free-range egg{"\n"}
+                200ml semi-skimmed milk{"\n\n"}
+                Directions:{"\n"}
+                Preheat the oven to 350 degrees F (175 degrees C).{"\n"}
+                Lightly grease a 9x13-inch baking dish.{"\n"}
+                Bring a large pot of salted water to a boil.
+              </Text>
+            ) : (
+              <Animatable.View 
+                animation="fadeIn"
+                duration={300}
+                style={styles.expandedContent}
+              >
+                <Text style={styles.recipeDescription}>
+                  By protecting and preserving our oceans, we can effectively reduce global warming as healthy oceans absorb a significant amount of atmospheric carbon dioxide. Implementing measures to prevent overfishing, reducing plastic pollution, and conserving marine habitats will contribute to a balanced ocean ecosystem, ultimately mitigating global warming.
+                </Text>
+              </Animatable.View>
+            )}
+
+            {/* More Recipes Section */}
+            <Text style={styles.exploreTitle}>Explore more!</Text>
+            <ScrollView 
+              horizontal 
+              showsHorizontalScrollIndicator={false}
+              style={styles.recipesScroll}
+            >
+              <TouchableOpacity 
+                style={styles.recipeThumbnail}
+                onPress={() => navigation.navigate('Pasta')}
+              >
+                <Image
+                  source={{ uri: 'https://images.unsplash.com/photo-1552056776-9b5657118ca4?w=500&h=500' }}
+                  style={styles.thumbnailImage}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity 
+                style={styles.recipeThumbnail}
+                onPress={() => navigation.navigate('Burger')}
+              >
+                <Image
+                  source={{ uri: 'https://images.unsplash.com/photo-1534790566855-4cb788d389ec?w=500&h=500' }}
+                  style={styles.thumbnailImage}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity 
+                style={styles.recipeThumbnail}
+                onPress={() => navigation.navigate('GreekSalad')}
+              >
+                <Image
+                  source={{ uri: 'https://images.unsplash.com/photo-1511910849309-0dffb8785146?w=500&h=500' }}
+                  style={styles.thumbnailImage}
+                />
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
+        </ScrollView>
+
+        {/* Bottom Navigation */}
+        <View style={styles.bottomNav}>
+          <TouchableOpacity 
+            style={styles.navButton}
+            onPress={() => navigation.navigate('Explore')}
+          >
+            <Ionicons name="compass-outline" size={28} color="#57636C" />
+            <Text style={styles.navButtonText}>Explore</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={styles.navButton}
+            onPress={() => navigation.navigate('Favorites')}
+          >
+            <Ionicons name="heart" size={28} color="#9439EF" />
+            <Text style={[styles.navButtonText, { color: '#9439EF' }]}>Favorites</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={styles.navButton}
+            onPress={() => navigation.navigate('Settings')}
+          >
+            <Ionicons name="settings-outline" size={28} color="#57636C" />
+            <Text style={styles.navButtonText}>Settings</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#F5F5F5',
+  },
+  container: {
+    flex: 1,
+  },
+  appBar: {
+    backgroundColor: 'rgba(255, 255, 255, 0.36)',
+    padding: 16,
+    alignItems: 'center',
+  },
+  appBarTitle: {
+    fontSize: 20,
+    fontFamily: 'Inter Tight',
+    color: '#101213',
+    fontWeight: 'bold',
+  },
+  content: {
+    flex: 1,
+  },
+  section: {
+    paddingHorizontal: 16,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontFamily: 'Inter Tight',
+    color: '#9439EF',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 12,
+  },
+  recipeImageContainer: {
+    width: '100%',
+    height: 270,
+    borderRadius: 12,
+    backgroundColor: '#EEEEEE',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    elevation: 3,
+    marginBottom: 16,
+    overflow: 'hidden',
+  },
+  recipeImage: {
+    width: '100%',
+    height: '100%',
+  },
+  expandableHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  recipeTitle: {
+    fontSize: 20,
+    fontFamily: 'Inter Tight',
+    color: '#9439EF',
+    fontWeight: '600',
+  },
+  collapsedContent: {
+    fontSize: 12,
+    fontFamily: 'Inter',
+    color: '#57636C',
+    lineHeight: 18,
+    marginTop: 8,
+  },
+  expandedContent: {
+    paddingVertical: 12,
+  },
+  recipeDescription: {
+    fontSize: 14,
+    fontFamily: 'Inter',
+    color: '#57636C',
+    lineHeight: 20,
+  },
+  exploreTitle: {
+    fontSize: 16,
+    fontFamily: 'Inter',
+    color: '#57636C',
+    marginTop: 24,
+    marginBottom: 12,
+  },
+  recipesScroll: {
+    marginBottom: 24,
+  },
+  recipeThumbnail: {
+    width: 80,
+    height: 80,
+    borderRadius: 12,
+    marginRight: 12,
+    overflow: 'hidden',
+  },
+  thumbnailImage: {
+    width: '200%',
+    height: '400%',
+  },
+  bottomNav: {
+    height: 80,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: '#EEE',
+    paddingHorizontal: 16,
+  },
+  navButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  navButtonText: {
+    fontSize: 12,
+    fontFamily: 'Manrope',
+    color: '#57636C',
+    marginTop: 4,
+  },
+});
+
+export default PastaScreen;

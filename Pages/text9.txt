@@ -1,0 +1,200 @@
+import React from 'react';
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+
+const Dishes = ({ navigation }) => {
+  const dishes = [
+    {
+      id: 1,
+      name: 'Pasta',
+      image: 'https://images.unsplash.com/photo-1552056776-9b5657118ca4?w=500&h=500',
+      route: 'Pasta',
+    },
+    {
+      id: 2,
+      name: 'Beef Burger',
+      image: 'https://images.unsplash.com/photo-1534790566855-4cb788d389ec?w=500&h=500',
+      route: 'Burgar',
+    },
+    {
+      id: 3,
+      name: 'Seasonal Spinach Salad',
+      image: 'https://images.unsplash.com/photo-1511910849309-0dffb8785146?w=500&h=500',
+      route: 'Greeksald',
+    },
+    {
+      id: 4,
+      name: 'Margherita Pizza',
+      image: 'https://images.unsplash.com/photo-1602658015584-790c9302078f?w=500&h=500',
+      route: 'Pizza',
+    },
+    {
+      id: 5,
+      name: 'Lasagna',
+      image: 'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixi=M3w0NTYyMDF8MHwxfHNlYXJjaHwxfHxMYXNhZ25hfGVufDB8fHx8MTczMTg5MDc0OHww&ixlib=rb-4.0.3&q=80&w=1080',
+      route: 'Lasagna',
+    },
+  ];
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={24} color="#030000" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Dishes</Text>
+          <View style={styles.headerIcons}>
+            <TouchableOpacity 
+              style={styles.iconButton} 
+              onPress={() => navigation.navigate('AboutUs')}
+            >
+              <Ionicons name="home" size={24} color="#57636C" />
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.iconButton} 
+              onPress={() => navigation.navigate('Search')}
+            >
+              <Ionicons name="search-outline" size={24} color="#57636C" />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={styles.content}>
+          {dishes.map((dish) => (
+            <TouchableOpacity 
+              key={dish.id}
+              style={styles.dishCard}
+              onPress={() => navigation.navigate(dish.route)}
+            >
+              <Image
+                source={{ uri: dish.image }}
+                style={styles.dishImage}
+              />
+              <View style={styles.dishInfo}>
+                <Text style={styles.dishName}>{dish.name}</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={24} color="#57636C" />
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
+
+      <View style={styles.bottomNav}>
+        <TouchableOpacity 
+          style={styles.navItem} 
+          onPress={() => navigation.navigate('Explore')}
+        >
+          <MaterialIcons name="explore" size={28} color="#57636C" />
+          <Text style={styles.navText}>Explore</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navItem} 
+          onPress={() => navigation.navigate('Favorites')}
+        >
+          <MaterialIcons name="favorite" size={28} color="#57636C" />
+          <Text style={styles.navText}>Favorites</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navItem} 
+          onPress={() => navigation.navigate('Settings')}
+        >
+          <Ionicons name="settings" size={28} color="#57636C" />
+          <Text style={styles.navText}>Setting</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  scrollView: {
+    flex: 1,
+    paddingTop: 60,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  headerTitle: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: '#9439EF',
+    fontFamily: 'InterTight',
+    marginLeft: 14,
+  },
+  headerIcons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconButton: {
+    marginLeft: 12,
+  },
+  content: {
+    paddingTop: 12,
+    paddingHorizontal: 16,
+  },
+  dishCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+    marginBottom: 8,
+    padding: 8,
+  },
+  dishImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 6,
+    marginRight: 8,
+  },
+  dishInfo: {
+    flex: 1,
+  },
+  dishName: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontFamily: 'InterTight',
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingVertical: 16,
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: '#eee',
+    elevation: 8,
+  },
+  navItem: {
+    alignItems: 'center',
+  },
+  navText: {
+    fontSize: 12,
+    color: '#57636C',
+    marginTop: 4,
+    fontFamily: 'Manrope',
+  },
+});
+
+export default Dishes;

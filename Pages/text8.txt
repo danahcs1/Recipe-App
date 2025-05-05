@@ -1,0 +1,198 @@
+import React from 'react';
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+
+const Cuisine = ({ navigation }) => {
+  const cuisines = [
+    {
+      id: 1,
+      name: 'American',
+      image: 'https://images.unsplash.com/photo-1695924428716-0b09d79add5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHwxfHxBbWVyaWNhbiUyMGZvb2R8ZW58MHx8fHwxNzMxODkwOTkzfDA&ixlib=rb-4.0.3&q=80&w=1080',
+      route: 'Burgar',
+    },
+    {
+      id: 2,
+      name: 'Italian',
+      image: 'https://images.unsplash.com/photo-1516100882582-96c3a05fe590?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw2fHxJdGFsaWFuJTIwfGVufDB8fHx8MTczMTg5MTAyMnww&ixlib=rb-4.0.3&q=80&w=1080',
+      route: 'Pasta',
+    },
+    {
+      id: 3,
+      name: 'Indian',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiN5j5yF2Hk5rKpXwJMCdJ1VTErvrVB9ZjUw&s',
+      route: 'ChickenTikka',
+    },
+    {
+      id: 4,
+      name: 'Saudi',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2pitQlQZiHqssa5P9dP76EBqbOHbG4i8BGw&s',
+      route: 'Kabsa',
+    },
+    {
+      id: 5,
+      name: 'Mexican',
+      image: 'https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHwxfHxNZXhpY2FuJTIwZm9vZCUyMHxlbnwwfHx8fDE3MzE4OTExMzV8MA&ixlib=rb-4.0.3&q=80&w=1080',
+      route: 'Fijita',
+    },
+  ];
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={24} color="#090101" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Cuisines</Text>
+          <View style={styles.headerIcons}>
+            <TouchableOpacity 
+              style={styles.iconButton} 
+              onPress={() => navigation.navigate('AboutUs')}
+            >
+              <Ionicons name="home" size={24} color="#57636C" />
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.iconButton} 
+              onPress={() => navigation.navigate('Search')}
+            >
+              <Ionicons name="search" size={24} color="#57636C" />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={styles.content}>
+          {cuisines.map((cuisine) => (
+            <TouchableOpacity 
+              key={cuisine.id}
+              style={styles.cuisineCard}
+              onPress={() => navigation.navigate(cuisine.route)}
+            >
+              <Image
+                source={{ uri: cuisine.image }}
+                style={styles.cuisineImage}
+              />
+              <View style={styles.cuisineInfo}>
+                <Text style={styles.cuisineName}>{cuisine.name}</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={24} color="#57636C" />
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
+
+      <View style={styles.bottomNav}>
+        <TouchableOpacity 
+          style={styles.navItem} 
+          onPress={() => navigation.navigate('Explore')}
+        >
+          <MaterialIcons name="explore" size={28} color="#57636C" />
+          <Text style={styles.navText}>Explore</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navItem} 
+          onPress={() => navigation.navigate('Favorites')}
+        >
+          <MaterialIcons name="favorite" size={28} color="#57636C" />
+          <Text style={styles.navText}>Favorites</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navItem} 
+          onPress={() => navigation.navigate('Settings')}
+        >
+          <Ionicons name="settings" size={28} color="#57636C" />
+          <Text style={styles.navText}>Setting</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  headerTitle: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: '#9439EF',
+    fontFamily: 'InterTight',
+  },
+  headerIcons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconButton: {
+    marginLeft: 12,
+  },
+  content: {
+    paddingTop: 70,
+    paddingHorizontal: 16,
+  },
+  cuisineCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+    marginBottom: 8,
+    padding: 8,
+  },
+  cuisineImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 6,
+    marginRight: 8,
+  },
+  cuisineInfo: {
+    flex: 1,
+  },
+  cuisineName: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontFamily: 'InterTight',
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingVertical: 16,
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: '#eee',
+    elevation: 8,
+  },
+  navItem: {
+    alignItems: 'center',
+  },
+  navText: {
+    fontSize: 12,
+    color: '#57636C',
+    marginTop: 4,
+    fontFamily: 'Manrope',
+  },
+});
+
+export default Cuisine;

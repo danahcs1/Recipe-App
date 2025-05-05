@@ -1,0 +1,1919 @@
+
+
+
+import React, { useState } from 'react';
+import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
+export default function App() {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <SafeAreaView style={styles.safe}>
+      <ScrollView style={styles.container}>
+        <Text style={styles.header}>Recipe Recommender</Text>
+
+        <Text style={styles.subHeader}>American Dish</Text>
+
+        <Image
+          source={{ uri: 'https://images.unsplash.com/photo-1534790566855-4cb788d389ec?w=500&h=500' }}
+          style={styles.image}
+        />
+
+        <TouchableOpacity onPress={() => setExpanded(!expanded)}>
+          <Text style={styles.title}>Classic American Burger</Text>
+        </TouchableOpacity>
+
+        {expanded && (
+          <Text style={styles.description}>
+            By protecting and preserving our oceans, we can effectively reduce global warming...
+          </Text>
+        )}
+
+        <Text style={styles.body}>
+          Ingredients:
+          {'\n'}• 500g ground beef
+          {'\n'}• 1/2 tsp salt
+          {'\n'}• 1/2 tsp black pepper
+          {'\n'}• 4 slices cheddar cheese
+          {'\n'}• 4 burger buns
+          {'\n'}• Lettuce, tomato, onion
+          {'\n'}• 4 tbsp mayo
+
+          {'\n\n'}Instructions:
+          {'\n'}1. Mix beef with salt and pepper.
+          {'\n'}2. Shape into patties and cook.
+          {'\n'}3. Melt cheese on top.
+          {'\n'}4. Toast buns and assemble burger.
+        </Text>
+
+        <Text style={styles.explore}>Explore more!</Text>
+
+        <ScrollView horizontal contentContainerStyle={styles.thumbRow}>
+          <Image style={styles.thumb} source={{ uri: 'https://images.unsplash.com/photo-1552056776-9b5657118ca4?w=500&h=500' }} />
+          <Image style={styles.thumb} source={{ uri: 'https://images.unsplash.com/photo-1534790566855-4cb788d389ec?w=500&h=500' }} />
+          <Image style={styles.thumb} source={{ uri: 'https://images.unsplash.com/photo-1511910849309-0dffb8785146?w=500&h=500' }} />
+        </ScrollView>
+      </ScrollView>
+
+      <View style={styles.navBar}>
+        <TouchableOpacity>
+          <Ionicons name="earth-outline" size={24} color="#57636C" />
+          <Text style={styles.navText}>Explore</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Ionicons name="heart-outline" size={24} color="#57636C" />
+          <Text style={styles.navText}>Favorites</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Ionicons name="settings-outline" size={24} color="#57636C" />
+          <Text style={styles.navText}>Settings</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  safe: { flex: 1, backgroundColor: '#f7f7f7' },
+  container: { padding: 16 },
+  header: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  subHeader: {
+    fontSize: 18,
+    color: '#9439EF',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  image: {
+    height: 230,
+    borderRadius: 12,
+    width: '100%',
+    marginBottom: 16,
+  },
+  title: {
+    fontSize: 20,
+    color: '#9439EF',
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  description: {
+    fontSize: 14,
+    color: '#444',
+    marginBottom: 16,
+    paddingHorizontal: 4,
+  },
+  body: {
+    fontSize: 14,
+    color: '#333',
+    marginVertical: 16,
+    textAlign: 'center',
+  },
+  explore: {
+    fontSize: 16,
+    marginTop: 40,
+    fontWeight: '500',
+    color: '#333',
+  },
+  thumbRow: {
+    flexDirection: 'row',
+    marginVertical: 12,
+  },
+  thumb: {
+    width: 80,
+    height: 80,
+    borderRadius: 12,
+    marginRight: 12,
+  },
+  navBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: 'white',
+    paddingVertical: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+  },
+  navText: {
+    fontSize: 12,
+    color: '#57636C',
+    marginTop: 4,
+    textAlign: 'center',
+  },
+});
+
+import React, { useState } from 'react';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  Image, 
+  TextInput, 
+  ScrollView, 
+  TouchableOpacity,
+  Platform,
+  Dimensions
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
+export default function FavScreen() {
+  const [searchText, setSearchText] = useState('');
+  const windowWidth = Dimensions.get('window').width;
+
+  const favoriteDishes = [
+    {
+      id: 1,
+      name: 'Pasta',
+      rating: 4.6,
+      description: 'Creamy pasta',
+      image: 'https://images.unsplash.com/photo-1552056776-9b5657118ca4?w=500&h=500',
+    },
+    {
+      id: 2,
+      name: 'Beef Burger',
+      rating: 4.7,
+      description: 'Juicy beef patty with toppings',
+      image: 'https://images.unsplash.com/photo-1534790566855-4cb788d389ec?w=500&h=500',
+    },
+    {
+      id: 3,
+      name: 'Seasonal Spinach Salad',
+      rating: 4.5,
+      description: 'Crisp romaine with Caesar dressing',
+      image: 'https://images.unsplash.com/photo-1511910849309-0dffb8785146?w=500&h=500',
+    },
+    {
+      id: 4,
+      name: 'Margherita Pizza',
+      rating: 4.9,
+      description: 'Classic Italian pizza',
+      image: 'https://images.unsplash.com/photo-1602658015584-790c9302078f?w=500&h=500',
+    }
+  ];
+
+  const filteredDishes = favoriteDishes.filter(dish =>
+    dish.name.toLowerCase().includes(searchText.toLowerCase()) ||
+    dish.description.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  return (
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={[styles.header, { width: windowWidth }]}>
+        <Text style={styles.headerTitle}>Favorite Dishes</Text>
+        <Text style={styles.headerSubtitle}>Your culinary treasures in one place</Text>
+      </View>
+
+      {/* Search Bar */}
+      <View style={styles.searchContainer}>
+        <View style={styles.searchBar}>
+          <Ionicons name="search" size={20} color="#9E9E9E" style={styles.searchIcon} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search your favorites..."
+            value={searchText}
+            onChangeText={setSearchText}
+            placeholderTextColor="#101213"
+          />
+        </View>
+      </View>
+
+      {/* Favorites List */}
+      <ScrollView style={styles.listContainer}>
+        {filteredDishes.map(dish => (
+          <TouchableOpacity 
+            key={dish.id} 
+            style={styles.dishCard}
+          >
+            <Image source={{ uri: dish.image }} style={styles.dishImage} />
+            <View style={styles.dishInfo}>
+              <Text style={styles.dishName}>{dish.name}</Text>
+              <View style={styles.ratingContainer}>
+                <Ionicons name="star" size={16} color="#FFC107" />
+                <Text style={styles.ratingText}>{dish.rating}</Text>
+              </View>
+              <Text style={styles.dishDescription}>{dish.description}</Text>
+            </View>
+            <TouchableOpacity style={styles.favoriteButton}>
+              <Ionicons name="heart" size={24} color="#FF0000" />
+            </TouchableOpacity>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity style={styles.navItem}>
+          <Ionicons name="compass-outline" size={28} color="#57636C" />
+          <Text style={styles.navText}>Explore</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem}>
+          <Ionicons name="heart" size={28} color="#9439EF" />
+          <Text style={[styles.navText, { color: '#9439EF' }]}>Favorites</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem}>
+          <Ionicons name="settings" size={28} color="#57636C" />
+          <Text style={styles.navText}>Settings</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  header: {
+    height: 144,
+    backgroundColor: '#9439EF',
+    padding: 24,
+    paddingBottom: 48,
+  },
+  headerTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: 'white',
+    marginBottom: 8,
+  },
+  headerSubtitle: {
+    fontSize: 16,
+    color: '#FFF3E0',
+  },
+  searchContainer: {
+    padding: 16,
+    marginTop: -24,
+  },
+  searchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F5F5F5',
+    borderRadius: 25,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
+  },
+  searchIcon: {
+    marginRight: 8,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+    color: '#101213',
+  },
+  listContainer: {
+    flex: 1,
+    padding: 16,
+  },
+  dishCard: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
+  },
+  dishImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 8,
+  },
+  dishInfo: {
+    flex: 1,
+    marginLeft: 16,
+  },
+  dishName: {
+    fontSize: 20,
+    color: '#101213',
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  ratingText: {
+    fontSize: 14,
+    color: '#57636C',
+    marginLeft: 4,
+  },
+  dishDescription: {
+    fontSize: 14,
+    color: '#57636C',
+  },
+  favoriteButton: {
+    backgroundColor: '#FFF3E0',
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 16,
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: '#f0f0f0',
+  },
+  navItem: {
+    alignItems: 'center',
+  },
+  navText: {
+    fontSize: 12,
+    color: '#57636C',
+    marginTop: 4,
+  },
+});
+
+import React, { useState } from 'react';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  Image, 
+  ScrollView, 
+  TouchableOpacity,
+  SafeAreaView,
+  Dimensions
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import * as Sharing from 'expo-sharing';
+import * as WebBrowser from 'expo-web-browser';
+
+export default function ShareScreen() {
+  const [expanded, setExpanded] = useState(false);
+  const windowWidth = Dimensions.get('window').width;
+
+  const shareRecipe = async () => {
+    try {
+      await Sharing.shareAsync('Check out this amazing recipe from Recipe Recommender!');
+    } catch (error) {
+      alert('Sharing failed: ' + error.message);
+    }
+  };
+
+  const openSocialMedia = (url) => {
+    WebBrowser.openBrowserAsync(url);
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      {/* App Bar */}
+      <View style={styles.appBar}>
+        <Ionicons name="arrow-back" size={24} color="black" />
+        <Text style={styles.appBarTitle}>Recipe Recommender</Text>
+        <View style={{ width: 24 }} /> {/* Spacer */}
+      </View>
+
+      <ScrollView style={styles.scrollView}>
+        {/* Header */}
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerTitle}>Share to your friends</Text>
+          
+          {/* Recipe Image */}
+          <View style={styles.recipeImageContainer}>
+            <Image 
+              source={{ uri: 'https://images.unsplash.com/photo-1485963631004-f2f00b1d6606?w=1080' }} 
+              style={styles.recipeImage}
+            />
+          </View>
+        </View>
+
+        {/* Expandable Section */}
+        <TouchableOpacity 
+          style={styles.expandableHeader}
+          onPress={() => setExpanded(!expanded)}
+        >
+          <Text style={styles.expandableTitle}>Share recipes with your friends</Text>
+          <Ionicons 
+            name={expanded ? 'chevron-up' : 'chevron-down'} 
+            size={24} 
+            color="#9439EF" 
+          />
+        </TouchableOpacity>
+        
+        {expanded && (
+          <View style={styles.expandableContent}>
+            <Text style={styles.expandableText}>
+              By protecting and preserving our oceans, we can effectively reduce global warming as healthy oceans absorb a significant amount of atmospheric carbon dioxide. Implementing measures to prevent overfishing, reducing plastic pollution, and conserving marine habitats will contribute to a balanced ocean ecosystem, ultimately mitigating global warming.
+            </Text>
+          </View>
+        )}
+        
+        {!expanded && (
+          <Text style={styles.collapsedText}>
+            By clicking on the button you can share the recipe
+          </Text>
+        )}
+
+        <View style={styles.divider} />
+
+        {/* Social Media Section */}
+        <Text style={styles.socialMediaTitle}>Social media</Text>
+        
+        <View style={styles.socialMediaContainer}>
+          {/* Instagram */}
+          <TouchableOpacity 
+            style={styles.socialButton}
+            onPress={() => openSocialMedia('https://instagram.com')}
+          >
+            <Image 
+              source={{ uri: 'https://images.unsplash.com/photo-1611162618758-2a29a995354b?w=1080' }}
+              style={styles.socialIcon}
+            />
+            <Text style={styles.socialText}>Instagram</Text>
+          </TouchableOpacity>
+
+          {/* TikTok */}
+          <TouchableOpacity 
+            style={styles.socialButton}
+            onPress={() => openSocialMedia('https://tiktok.com')}
+          >
+            <Image 
+              source={{ uri: 'https://images.unsplash.com/photo-1611605698323-b1e99cfd37ea?w=1080' }}
+              style={styles.socialIcon}
+            />
+            <Text style={styles.socialText}>TikTok</Text>
+          </TouchableOpacity>
+
+          {/* WhatsApp */}
+          <TouchableOpacity 
+            style={styles.socialButton}
+            onPress={() => openSocialMedia('https://whatsapp.com')}
+          >
+            <Image 
+              source={{ uri: 'https://images.unsplash.com/photo-1633354931133-27ac1ee5d853?w=1080' }}
+              style={styles.socialIcon}
+            />
+            <Text style={styles.socialText}>WhatsApp</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+
+      {/* Bottom Buttons */}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity 
+          style={[styles.button, styles.homeButton]}
+          onPress={() => alert('Navigating to Home')}
+        >
+          <Text style={styles.buttonText}>Home</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={[styles.button, styles.nextButton]}
+          onPress={() => alert('Navigating to Shopping List')}
+        >
+          <Text style={styles.buttonText}>Next</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f6',
+  },
+  appBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: 'rgba(245, 245, 246, 0.66)',
+  },
+  appBarTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  headerContainer: {
+    padding: 16,
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  recipeImageContainer: {
+    width: '100%',
+    height: 230,
+    borderRadius: 12,
+    backgroundColor: '#f0f0f0',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
+    elevation: 5,
+    overflow: 'hidden',
+    marginBottom: 16,
+  },
+  recipeImage: {
+    width: '100%',
+    height: '100%',
+  },
+  expandableHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    paddingBottom: 8,
+  },
+  expandableTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  expandableContent: {
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+  },
+  expandableText: {
+    fontSize: 14,
+    color: '#666',
+  },
+  collapsedText: {
+    fontSize: 14,
+    color: '#666',
+    paddingHorizontal: 16,
+    paddingTop: 8,
+    paddingBottom: 16,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#e0e0e0',
+    marginVertical: 12,
+  },
+  socialMediaTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#666',
+    paddingHorizontal: 16,
+    paddingTop: 12,
+  },
+  socialMediaContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+  },
+  socialButton: {
+    alignItems: 'center',
+  },
+  socialIcon: {
+    width: 80,
+    height: 80,
+    borderRadius: 12,
+    marginBottom: 8,
+  },
+  socialText: {
+    fontSize: 14,
+  },
+  buttonContainer: {
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+  },
+  button: {
+    width: '100%',
+    height: 50,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+    marginBottom: 8,
+  },
+  homeButton: {
+    backgroundColor: '#9439EF',
+    borderWidth: 1,
+    borderColor: '#9439EF',
+  },
+  nextButton: {
+    backgroundColor: '#9439EF',
+    borderWidth: 2,
+    borderColor: '#9439EF',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+});
+
+import React from 'react';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  Image, 
+  ScrollView, 
+  TouchableOpacity,
+  SafeAreaView,
+  Dimensions
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
+export default function DietsScreen({ navigation }) {
+  const windowWidth = Dimensions.get('window').width;
+
+  const dietItems = [
+    {
+      id: 1,
+      title: 'Broiled Salmon',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3-0gUpc4HemRyks1gIZHp5zvLR3W9TC6oUg&s',
+      route: 'BroiledSalmon'
+    },
+    {
+      id: 2,
+      title: 'Greek Salad',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQGaGQt_A3oKG-PecnfmoNZS-TVXY_MB4pFQ&s',
+      route: 'GreekSalad'
+    },
+    {
+      id: 3,
+      title: 'Chia Pudding',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRqx7XDa90lHaA8WGCPu9609LkJfSHdh0NjQ&s',
+      route: 'ChiaPudding'
+    },
+    {
+      id: 4,
+      title: 'Eggs in Purgatory',
+      image: 'https://www.fromachefskitchen.com/wp-content/uploads/2021/09/Eggs-in-Purgatory-with-Italian-Sausage.jpeg',
+      route: 'EggsInPurgatory'
+    },
+    {
+      id: 5,
+      title: 'Baked Salmon with Asparagus',
+      image: 'https://images.unsplash.com/photo-1691201090878-1b9eab935bdd?w=1080',
+      route: 'BakedSalmon'
+    }
+  ];
+
+  return (
+    <SafeAreaView style={styles.container}>
+      {/* App Bar */}
+      <View style={styles.appBar}>
+        <View style={styles.appBarContent}>
+          <Text style={styles.appBarTitle}>Diets</Text>
+          <View style={styles.appBarActions}>
+            <TouchableOpacity 
+              style={styles.iconButton}
+              onPress={() => navigation.navigate('AboutUs')}
+            >
+              <Ionicons name="home" size={24} color="#666" />
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.iconButton}
+              onPress={() => navigation.navigate('Search')}
+            >
+              <Ionicons name="search" size={24} color="#666" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+
+      {/* Diet Items List */}
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.listContainer}>
+          {dietItems.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              style={styles.dietItem}
+              onPress={() => navigation.navigate(item.route)}
+            >
+              <Image 
+                source={{ uri: item.image }} 
+                style={styles.dietImage}
+              />
+              <View style={styles.dietInfo}>
+                <Text style={styles.dietTitle}>{item.title}</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={24} color="#57636C" />
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
+
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => navigation.navigate('Explore')}
+        >
+          <Ionicons name="compass" size={28} color="#57636C" />
+          <Text style={styles.navText}>Explore</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => navigation.navigate('Favorites')}
+        >
+          <Ionicons name="heart" size={28} color="#9439EF" />
+          <Text style={[styles.navText, { color: '#9439EF' }]}>Favorites</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => navigation.navigate('Settings')}
+        >
+          <Ionicons name="settings" size={28} color="#57636C" />
+          <Text style={styles.navText}>Settings</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f6',
+  },
+  appBar: {
+    backgroundColor: '#f5f5f6',
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+  },
+  appBarContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  appBarTitle: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: '#9439EF',
+  },
+  appBarActions: {
+    flexDirection: 'row',
+  },
+  iconButton: {
+    marginLeft: 16,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  listContainer: {
+    padding: 16,
+    paddingTop: 32,
+  },
+  dietItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  dietImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 6,
+  },
+  dietInfo: {
+    flex: 1,
+    marginLeft: 8,
+  },
+  dietTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 16,
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: '#f0f0f0',
+  },
+  navItem: {
+    alignItems: 'center',
+  },
+  navText: {
+    fontSize: 12,
+    color: '#57636C',
+    marginTop: 4,
+  },
+});
+
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  SafeAreaView,
+  Dimensions
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import * as Animatable from 'react-native-animatable';
+
+const { width } = Dimensions.get('window');
+
+const PastaScreen = ({ navigation }) => {
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleExpand = () => {
+    setExpanded(!expanded);
+  };
+
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        {/* App Bar */}
+        <View style={styles.appBar}>
+          <Text style={styles.appBarTitle}>Recipe Recommender</Text>
+        </View>
+
+        {/* Content */}
+        <ScrollView style={styles.content}>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Italian Dishes</Text>
+            
+            {/* Recipe Image - Adjusted to maintain aspect ratio */}
+            <View style={styles.recipeImageContainer}>
+              <Image
+                source={{ uri: 'https://images.unsplash.com/photo-1552056776-9b5657118ca4?w=500&h=500' }}
+                style={styles.recipeImage}
+                resizeMode="cover"
+              />
+            </View>
+
+            {/* Expandable Recipe Info */}
+            <TouchableOpacity 
+              style={styles.expandableHeader}
+              onPress={toggleExpand}
+            >
+              <Text style={styles.recipeTitle}>Pasta</Text>
+              <Ionicons 
+                name={expanded ? 'chevron-up' : 'chevron-down'} 
+                size={24} 
+                color="#9439EF" 
+              />
+            </TouchableOpacity>
+
+            {!expanded ? (
+              <Text style={styles.collapsedContent}>
+                Ingredients:{"\n"}
+                2 sprigs of oregano{"\n"}
+                olive oil 2 small onions and 4 cloves of garlic{"\n"}
+                1kg rainbow or Swiss chard, or other seasonal greens{"\n"}
+                ½ a lemon{"\n\n"}
+                TOMATO SAUCE:{"\n"}
+                2 cloves of garlic{"\n"}
+                1 dried red chilli{"\n"}
+                1 bunch of basil (30g){"\n"}
+                3 x 400g tins of quality plum tomatoes{"\n"}
+                250g dried cannelloni tubes{"\n\n"}
+                OOZY CHEESE SAUCE:{"\n"}
+                250g ricotta cheese{"\n"}
+                60g Cheddar cheese{"\n"}
+                60g Parmesan cheese{"\n"}
+                1 large free-range egg{"\n"}
+                200ml semi-skimmed milk{"\n\n"}
+                Directions:{"\n"}
+                Preheat the oven to 350 degrees F (175 degrees C).{"\n"}
+                Lightly grease a 9x13-inch baking dish.{"\n"}
+                Bring a large pot of salted water to a boil.
+              </Text>
+            ) : (
+              <Animatable.View 
+                animation="fadeIn"
+                duration={300}
+                style={styles.expandedContent}
+              >
+                <Text style={styles.recipeDescription}>
+                  By protecting and preserving our oceans, we can effectively reduce global warming as healthy oceans absorb a significant amount of atmospheric carbon dioxide. Implementing measures to prevent overfishing, reducing plastic pollution, and conserving marine habitats will contribute to a balanced ocean ecosystem, ultimately mitigating global warming.
+                </Text>
+              </Animatable.View>
+            )}
+
+            {/* More Recipes Section */}
+            <Text style={styles.exploreTitle}>Explore more!</Text>
+            <ScrollView 
+              horizontal 
+              showsHorizontalScrollIndicator={false}
+              style={styles.recipesScroll}
+            >
+              <TouchableOpacity 
+                style={styles.recipeThumbnail}
+                onPress={() => navigation.navigate('Pasta')}
+              >
+                <Image
+                  source={{ uri: 'https://images.unsplash.com/photo-1552056776-9b5657118ca4?w=500&h=500' }}
+                  style={styles.thumbnailImage}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity 
+                style={styles.recipeThumbnail}
+                onPress={() => navigation.navigate('Burger')}
+              >
+                <Image
+                  source={{ uri: 'https://images.unsplash.com/photo-1534790566855-4cb788d389ec?w=500&h=500' }}
+                  style={styles.thumbnailImage}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity 
+                style={styles.recipeThumbnail}
+                onPress={() => navigation.navigate('GreekSalad')}
+              >
+                <Image
+                  source={{ uri: 'https://images.unsplash.com/photo-1511910849309-0dffb8785146?w=500&h=500' }}
+                  style={styles.thumbnailImage}
+                />
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
+        </ScrollView>
+
+        {/* Bottom Navigation */}
+        <View style={styles.bottomNav}>
+          <TouchableOpacity 
+            style={styles.navButton}
+            onPress={() => navigation.navigate('Explore')}
+          >
+            <Ionicons name="compass-outline" size={28} color="#57636C" />
+            <Text style={styles.navButtonText}>Explore</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={styles.navButton}
+            onPress={() => navigation.navigate('Favorites')}
+          >
+            <Ionicons name="heart" size={28} color="#9439EF" />
+            <Text style={[styles.navButtonText, { color: '#9439EF' }]}>Favorites</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={styles.navButton}
+            onPress={() => navigation.navigate('Settings')}
+          >
+            <Ionicons name="settings-outline" size={28} color="#57636C" />
+            <Text style={styles.navButtonText}>Settings</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#F5F5F5',
+  },
+  container: {
+    flex: 1,
+  },
+  appBar: {
+    backgroundColor: 'rgba(255, 255, 255, 0.36)',
+    padding: 16,
+    alignItems: 'center',
+  },
+  appBarTitle: {
+    fontSize: 20,
+    fontFamily: 'Inter Tight',
+    color: '#101213',
+    fontWeight: 'bold',
+  },
+  content: {
+    flex: 1,
+  },
+  section: {
+    paddingHorizontal: 16,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontFamily: 'Inter Tight',
+    color: '#9439EF',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 12,
+  },
+  recipeImageContainer: {
+    width: '100%',
+    height: 270,
+    borderRadius: 12,
+    backgroundColor: '#EEEEEE',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    elevation: 3,
+    marginBottom: 16,
+    overflow: 'hidden',
+  },
+  recipeImage: {
+    width: '100%',
+    height: '100%',
+  },
+  expandableHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  recipeTitle: {
+    fontSize: 20,
+    fontFamily: 'Inter Tight',
+    color: '#9439EF',
+    fontWeight: '600',
+  },
+  collapsedContent: {
+    fontSize: 12,
+    fontFamily: 'Inter',
+    color: '#57636C',
+    lineHeight: 18,
+    marginTop: 8,
+  },
+  expandedContent: {
+    paddingVertical: 12,
+  },
+  recipeDescription: {
+    fontSize: 14,
+    fontFamily: 'Inter',
+    color: '#57636C',
+    lineHeight: 20,
+  },
+  exploreTitle: {
+    fontSize: 16,
+    fontFamily: 'Inter',
+    color: '#57636C',
+    marginTop: 24,
+    marginBottom: 12,
+  },
+  recipesScroll: {
+    marginBottom: 24,
+  },
+  recipeThumbnail: {
+    width: 80,
+    height: 80,
+    borderRadius: 12,
+    marginRight: 12,
+    overflow: 'hidden',
+  },
+  thumbnailImage: {
+    width: '200%',
+    height: '400%',
+  },
+  bottomNav: {
+    height: 80,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: '#EEE',
+    paddingHorizontal: 16,
+  },
+  navButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  navButtonText: {
+    fontSize: 12,
+    fontFamily: 'Manrope',
+    color: '#57636C',
+    marginTop: 4,
+  },
+});
+
+export default PastaScreen;
+
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+  Dimensions,
+  Platform,
+} from 'react-native';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+
+const BakedSalmonwithAsparagus = ({ navigation }) => {
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleExpand = () => {
+    setExpanded(!expanded);
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={24} color="#131010" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Recipe Recommender</Text>
+          <View style={{ width: 24 }} />
+        </View>
+
+        <View style={styles.content}>
+          <Text style={styles.dietsTitle}>Diets</Text>
+          
+          <View style={styles.imageContainer}>
+            <Image
+              source={{ uri: 'https://images.unsplash.com/photo-1691201090878-1b9eab935bdd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw3fHxCYWtlZCUyMFNhbG1vbiUyMHxlbnwwfHx8fDE3MzMyNDQ5NjV8MA&ixlib=rb-4.0.3&q=80&w=1080' }}
+              style={styles.recipeImage}
+            />
+          </View>
+
+          <TouchableOpacity onPress={toggleExpand} style={styles.expandableHeader}>
+            <Text style={styles.recipeTitle}>Baked Salmon with Asparagus</Text>
+          </TouchableOpacity>
+
+          {expanded && (
+            <View style={styles.expandedContent}>
+              <Text style={styles.description}>
+                By protecting and preserving our oceans, we can effectively reduce global warming as healthy oceans absorb a significant amount of atmospheric carbon dioxide. Implementing measures to prevent overfishing, reducing plastic pollution, and conserving marine habitats will contribute to a balanced ocean ecosystem, ultimately mitigating global warming.
+              </Text>
+            </View>
+          )}
+
+          <Text style={styles.ingredientsTitle}>Ingredients:</Text>
+          <Text style={styles.ingredientsText}>
+            • 1 salmon fillet{"\n"}
+            • 1 bunch asparagus, trimmed{"\n"}
+            • 1 tbsp olive oil{"\n"}
+            • Lemon slices{"\n"}
+            • Salt, pepper, and dill for seasoning{"\n\n"}
+            Instructions:{"\n\n"}
+            1. Preheat oven to 180°C (350°F).{"\n"}
+            2. Place the salmon fillet on a baking sheet and drizzle with olive oil.{"\n"}
+            3. Arrange asparagus around the salmon and season everything with salt, pepper, and dill.{"\n"}
+            4. Add lemon slices on top of the salmon and bake for 15-20 minutes until the fish is cooked through.{"\n\n"}
+            These meals are low in calories, high in nutrients, and perfect for a healthy diet!
+          </Text>
+
+          <Text style={styles.exploreTitle}>Explore more!</Text>
+
+          <View style={styles.thumbnailsRow}>
+            <TouchableOpacity onPress={() => navigation.navigate('Pasta')}>
+              <Image
+                source={{ uri: 'https://images.unsplash.com/photo-1552056776-9b5657118ca4?w=500&h=500' }}
+                style={styles.thumbnail}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Burgar')}>
+              <Image
+                source={{ uri: 'https://images.unsplash.com/photo-1534790566855-4cb788d389ec?w=500&h=500' }}
+                style={styles.thumbnail}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Greeksald')}>
+              <Image
+                source={{ uri: 'https://images.unsplash.com/photo-1511910849309-0dffb8785146?w=500&h=500' }}
+                style={styles.thumbnail}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+
+      <View style={styles.bottomNav}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Explore')}>
+          <MaterialIcons name="explore" size={24} color="#57636C" />
+          <Text style={styles.navText}>Explore</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Favorites')}>
+          <MaterialIcons name="favorite" size={24} color="#57636C" />
+          <Text style={styles.navText}>Favorites</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Settings')}>
+          <Ionicons name="settings-sharp" size={24} color="#57636C" />
+          <Text style={styles.navText}>Setting</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: 'rgba(255, 255, 255, 0.36)',
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#131010',
+  },
+  content: {
+    padding: 16,
+  },
+  dietsTitle: {
+    fontSize: 24,
+    color: '#9439EF',
+    textAlign: 'center',
+    marginBottom: 16,
+    fontWeight: 'bold',
+  },
+  imageContainer: {
+    width: '100%',
+    height: 230,
+    backgroundColor: '#f5f5f5',
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
+    elevation: 5,
+    marginBottom: 16,
+    overflow: 'hidden',
+  },
+  recipeImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+  },
+  expandableHeader: {
+    paddingVertical: 8,
+  },
+  recipeTitle: {
+    fontSize: 20,
+    color: '#9439EF',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  expandedContent: {
+    paddingVertical: 8,
+  },
+  description: {
+    fontSize: 14,
+    color: '#666',
+    lineHeight: 20,
+  },
+  ingredientsTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 16,
+    textAlign: 'center',
+  },
+  ingredientsText: {
+    fontSize: 14,
+    color: '#333',
+    lineHeight: 20,
+    marginTop: 8,
+    textAlign: 'center',
+  },
+  exploreTitle: {
+    fontSize: 16,
+    color: '#666',
+    marginTop: 90,
+    marginLeft: 16,
+  },
+  thumbnailsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+  },
+  thumbnail: {
+    width: 80,
+    height: 80,
+    borderRadius: 12,
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingVertical: 16,
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: '#eee',
+    elevation: 8,
+  },
+  navItem: {
+    alignItems: 'center',
+  },
+  navText: {
+    fontSize: 12,
+    color: '#57636C',
+    marginTop: 4,
+  },
+});
+
+export default BakedSalmonwithAsparagus;
+
+import React from 'react';
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+
+export default function App() {
+  return (
+    <ScrollView style={styles.container}>
+      <Text style={styles.header}>Dessert Course</Text>
+
+      <Image
+        source={{
+          uri: 'https://sugargeekshow.com/wp-content/uploads/2022/12/french_macarons_featured4.jpg',
+        }}
+        style={styles.mainImage}
+      />
+
+      <Text style={styles.title}>Perfect French Macarons</Text>
+
+      <Text style={styles.description}>
+        Master the art of baking amazing macaron cookies consistently, and create stunning macaron towers and plated desserts.
+        {'\n\n'}Cake Nuvo - Online Baking School, Irit Ishal{'\n'}4.8 ★★★★★ (1554){'\n'}3.5 total hours | 33 lectures | All levels
+      </Text>
+
+      <Text style={styles.price}>$69.99</Text>
+
+      <TouchableOpacity style={styles.button} onPress={() => alert('Course Started!')}>
+        <Text style={styles.buttonText}>Start</Text>
+      </TouchableOpacity>
+
+      <Text style={styles.explore}>Explore more!</Text>
+
+      <View style={styles.imageRow}>
+        <Image
+          source={{
+            uri: 'https://chopnotch.com/wp-content/uploads/2020/11/Panna-Cotta-1.jpg',
+          }}
+          style={styles.thumbnail}
+        />
+        <Image
+          source={{
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrJZD0c9gRDu48XoYFmwK6xh2USYKuBRi2-Q&s',
+          }}
+          style={styles.thumbnail}
+        />
+        <Image
+          source={{
+            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTjX70ZjPUAt_m3_vyAiFIriIgB9YkEdQVRA&s',
+          }}
+          style={styles.thumbnail}
+        />
+      </View>
+
+      <TouchableOpacity
+        style={styles.homeButton}
+        onPress={() => alert('Navigate to Home')}>
+        <Text style={styles.homeButtonText}>Home</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    backgroundColor: '#fff',
+    flex: 1,
+  },
+  header: {
+    fontSize: 28,
+    color: '#9439EF',
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  mainImage: {
+    width: '100%',
+    height: 230,
+    borderRadius: 12,
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginBottom: 8,
+  },
+  description: {
+    fontSize: 12,
+    marginBottom: 10,
+  },
+  price: {
+    fontSize: 26,
+    textDecorationLine: 'underline',
+    marginBottom: 12,
+  },
+  button: {
+    backgroundColor: '#9439EF',
+    paddingVertical: 10,
+    borderRadius: 8,
+    width: 100,
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: '#fff',
+  },
+  explore: {
+    fontSize: 14,
+    fontWeight: '500',
+    marginBottom: 10,
+  },
+  imageRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  thumbnail: {
+    width: 80,
+    height: 80,
+    borderRadius: 12,
+  },
+  homeButton: {
+    backgroundColor: '#9439EF',
+    marginTop: 20,
+    padding: 12,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  homeButtonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+});
+
+import React from 'react';
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+
+const Cuisine = ({ navigation }) => {
+  const cuisines = [
+    {
+      id: 1,
+      name: 'American',
+      image: 'https://images.unsplash.com/photo-1695924428716-0b09d79add5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHwxfHxBbWVyaWNhbiUyMGZvb2R8ZW58MHx8fHwxNzMxODkwOTkzfDA&ixlib=rb-4.0.3&q=80&w=1080',
+      route: 'Burgar',
+    },
+    {
+      id: 2,
+      name: 'Italian',
+      image: 'https://images.unsplash.com/photo-1516100882582-96c3a05fe590?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw2fHxJdGFsaWFuJTIwfGVufDB8fHx8MTczMTg5MTAyMnww&ixlib=rb-4.0.3&q=80&w=1080',
+      route: 'Pasta',
+    },
+    {
+      id: 3,
+      name: 'Indian',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiN5j5yF2Hk5rKpXwJMCdJ1VTErvrVB9ZjUw&s',
+      route: 'ChickenTikka',
+    },
+    {
+      id: 4,
+      name: 'Saudi',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2pitQlQZiHqssa5P9dP76EBqbOHbG4i8BGw&s',
+      route: 'Kabsa',
+    },
+    {
+      id: 5,
+      name: 'Mexican',
+      image: 'https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHwxfHxNZXhpY2FuJTIwZm9vZCUyMHxlbnwwfHx8fDE3MzE4OTExMzV8MA&ixlib=rb-4.0.3&q=80&w=1080',
+      route: 'Fijita',
+    },
+  ];
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={24} color="#090101" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Cuisines</Text>
+          <View style={styles.headerIcons}>
+            <TouchableOpacity 
+              style={styles.iconButton} 
+              onPress={() => navigation.navigate('AboutUs')}
+            >
+              <Ionicons name="home" size={24} color="#57636C" />
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.iconButton} 
+              onPress={() => navigation.navigate('Search')}
+            >
+              <Ionicons name="search" size={24} color="#57636C" />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={styles.content}>
+          {cuisines.map((cuisine) => (
+            <TouchableOpacity 
+              key={cuisine.id}
+              style={styles.cuisineCard}
+              onPress={() => navigation.navigate(cuisine.route)}
+            >
+              <Image
+                source={{ uri: cuisine.image }}
+                style={styles.cuisineImage}
+              />
+              <View style={styles.cuisineInfo}>
+                <Text style={styles.cuisineName}>{cuisine.name}</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={24} color="#57636C" />
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
+
+      <View style={styles.bottomNav}>
+        <TouchableOpacity 
+          style={styles.navItem} 
+          onPress={() => navigation.navigate('Explore')}
+        >
+          <MaterialIcons name="explore" size={28} color="#57636C" />
+          <Text style={styles.navText}>Explore</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navItem} 
+          onPress={() => navigation.navigate('Favorites')}
+        >
+          <MaterialIcons name="favorite" size={28} color="#57636C" />
+          <Text style={styles.navText}>Favorites</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navItem} 
+          onPress={() => navigation.navigate('Settings')}
+        >
+          <Ionicons name="settings" size={28} color="#57636C" />
+          <Text style={styles.navText}>Setting</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  headerTitle: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: '#9439EF',
+    fontFamily: 'InterTight',
+  },
+  headerIcons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconButton: {
+    marginLeft: 12,
+  },
+  content: {
+    paddingTop: 70,
+    paddingHorizontal: 16,
+  },
+  cuisineCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+    marginBottom: 8,
+    padding: 8,
+  },
+  cuisineImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 6,
+    marginRight: 8,
+  },
+  cuisineInfo: {
+    flex: 1,
+  },
+  cuisineName: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontFamily: 'InterTight',
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingVertical: 16,
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: '#eee',
+    elevation: 8,
+  },
+  navItem: {
+    alignItems: 'center',
+  },
+  navText: {
+    fontSize: 12,
+    color: '#57636C',
+    marginTop: 4,
+    fontFamily: 'Manrope',
+  },
+});
+
+export default Cuisine;
+
+import React from 'react';
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+
+const Dishes = ({ navigation }) => {
+  const dishes = [
+    {
+      id: 1,
+      name: 'Pasta',
+      image: 'https://images.unsplash.com/photo-1552056776-9b5657118ca4?w=500&h=500',
+      route: 'Pasta',
+    },
+    {
+      id: 2,
+      name: 'Beef Burger',
+      image: 'https://images.unsplash.com/photo-1534790566855-4cb788d389ec?w=500&h=500',
+      route: 'Burgar',
+    },
+    {
+      id: 3,
+      name: 'Seasonal Spinach Salad',
+      image: 'https://images.unsplash.com/photo-1511910849309-0dffb8785146?w=500&h=500',
+      route: 'Greeksald',
+    },
+    {
+      id: 4,
+      name: 'Margherita Pizza',
+      image: 'https://images.unsplash.com/photo-1602658015584-790c9302078f?w=500&h=500',
+      route: 'Pizza',
+    },
+    {
+      id: 5,
+      name: 'Lasagna',
+      image: 'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixi=M3w0NTYyMDF8MHwxfHNlYXJjaHwxfHxMYXNhZ25hfGVufDB8fHx8MTczMTg5MDc0OHww&ixlib=rb-4.0.3&q=80&w=1080',
+      route: 'Lasagna',
+    },
+  ];
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={24} color="#030000" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Dishes</Text>
+          <View style={styles.headerIcons}>
+            <TouchableOpacity 
+              style={styles.iconButton} 
+              onPress={() => navigation.navigate('AboutUs')}
+            >
+              <Ionicons name="home" size={24} color="#57636C" />
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.iconButton} 
+              onPress={() => navigation.navigate('Search')}
+            >
+              <Ionicons name="search-outline" size={24} color="#57636C" />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={styles.content}>
+          {dishes.map((dish) => (
+            <TouchableOpacity 
+              key={dish.id}
+              style={styles.dishCard}
+              onPress={() => navigation.navigate(dish.route)}
+            >
+              <Image
+                source={{ uri: dish.image }}
+                style={styles.dishImage}
+              />
+              <View style={styles.dishInfo}>
+                <Text style={styles.dishName}>{dish.name}</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={24} color="#57636C" />
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
+
+      <View style={styles.bottomNav}>
+        <TouchableOpacity 
+          style={styles.navItem} 
+          onPress={() => navigation.navigate('Explore')}
+        >
+          <MaterialIcons name="explore" size={28} color="#57636C" />
+          <Text style={styles.navText}>Explore</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navItem} 
+          onPress={() => navigation.navigate('Favorites')}
+        >
+          <MaterialIcons name="favorite" size={28} color="#57636C" />
+          <Text style={styles.navText}>Favorites</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navItem} 
+          onPress={() => navigation.navigate('Settings')}
+        >
+          <Ionicons name="settings" size={28} color="#57636C" />
+          <Text style={styles.navText}>Setting</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  scrollView: {
+    flex: 1,
+    paddingTop: 60,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  headerTitle: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: '#9439EF',
+    fontFamily: 'InterTight',
+    marginLeft: 14,
+  },
+  headerIcons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconButton: {
+    marginLeft: 12,
+  },
+  content: {
+    paddingTop: 12,
+    paddingHorizontal: 16,
+  },
+  dishCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+    marginBottom: 8,
+    padding: 8,
+  },
+  dishImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 6,
+    marginRight: 8,
+  },
+  dishInfo: {
+    flex: 1,
+  },
+  dishName: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontFamily: 'InterTight',
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    paddingVertical: 16,
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: '#eee',
+    elevation: 8,
+  },
+  navItem: {
+    alignItems: 'center',
+  },
+  navText: {
+    fontSize: 12,
+    color: '#57636C',
+    marginTop: 4,
+    fontFamily: 'Manrope',
+  },
+});
+
+export default Dishes;
+
